@@ -13,7 +13,7 @@ export default function App() {
       </View>
 
       <View>
-        <Button label="Escolher uma foto" />
+        <Button theme="primary" label="Escolher uma foto" />
         <Button label="Use esta foto" />
       </View>
       <StatusBar style="auto" />
