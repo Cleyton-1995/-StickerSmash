@@ -109,5 +109,6 @@ const styles = StyleSheet.create({
   optionsRow: {
     alignItems: "center",
     flexDirection: "row",
+    justifyContent: "center",
   },
 });
