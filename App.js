@@ -10,14 +10,20 @@ import EmojiPicker from "./src/components/EmojiPicker";
 import EmojiList from "./src/components/EmojiList";
 import EmojiSticker from "./src/components/EmojiSticker";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import * as MediaLibrary from "expo-media-library";
 
 const PlaceholderImage = require("./assets/images/background-image.png");
 
 export default function App() {
+  const [status, requestPermission] = MediaLibrary.usePermissions();
   const [pickedEmoji, setPickedEmoji] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [showAppOptions, steShowAppOptions] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+
+  if (status === null) {
+    requestPermission();
+  }
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -40,11 +46,11 @@ export default function App() {
   const onAddSticker = () => {
     setIsModalVisible(true);
   };
-  
+
   const onModalClose = () => {
     setIsModalVisible(false);
   };
-  
+
   const onSaveImageAsync = async () => {};
 
   return (
@@ -54,16 +60,22 @@ export default function App() {
           placeholderImageSource={PlaceholderImage}
           selectedImage={selectedImage}
         />
-        {pickedEmoji && <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />}
+        {pickedEmoji && (
+          <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />
+        )}
       </View>
       {showAppOptions ? (
-        <View style={styles.optionsContainer} >
-          <View style={styles.optionsRow} >
+        <View style={styles.optionsContainer}>
+          <View style={styles.optionsRow}>
             <IconButton icon="refresh" label="Reset" onPress={onReset} />
 
             <CircleButton onPress={onAddSticker} />
 
-            <IconButton icon="save-alt" label="Save" onPress={onSaveImageAsync} />
+            <IconButton
+              icon="save-alt"
+              label="Save"
+              onPress={onSaveImageAsync}
+            />
           </View>
         </View>
       ) : (
@@ -79,7 +91,7 @@ export default function App() {
           />
         </View>
       )}
-      <EmojiPicker isVisible={isModalVisible} onClose={onModalClose} >
+      <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
         <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} />
       </EmojiPicker>
       <StatusBar style="auto" />
