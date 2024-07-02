@@ -4,7 +4,7 @@ import { View, StyleSheet, Pressable, Text } from "react-native";
 
 export default function  IconButton({ icon, label,  onPress }) {
   return (
-      <Pressable style={styles.iconButton} onPress={onPress}>
+      <Pressable style={styles.iconButtonContainer} onPress={onPress}>
         <MaterialIcons name={icon} size={24} color="#FFFFFF" />
         <Text style={styles.iconButtonLabel} >{label}</Text>
       </Pressable>
@@ -14,10 +14,10 @@ export default function  IconButton({ icon, label,  onPress }) {
 export const styles = StyleSheet.create({
   iconButtonContainer: {
     justifyContent: 'center',
-    alignContent: 'center',
+    alignItems: 'center',
   },
   iconButtonLabel: {
     marginTop: 12,
-    backgroundColor: "#FFFFFF",
+    color: "#FFFFFF",
   },
 });
